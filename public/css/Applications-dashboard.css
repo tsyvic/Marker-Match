@@ -1,0 +1,207 @@
+body {
+  margin: 0;
+  padding: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-family: Verdana;
+  background-color: white;
+}
+
+/* SIDE NAVIGATION BAR */
+
+#navigation-bar {
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #00457D;
+  overflow-x: auto;
+  padding: 20px 0px;
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box
+}
+
+#navigation-bar div a {
+  padding: 10px;
+}
+
+
+#main-div {
+  margin-left: 100px;
+  /* Pushes out content from under navigation bar. Same width as navigation bar */
+}
+
+#navigation-bar a {
+  padding: 10px;
+  text-decoration: none;
+  word-wrap: break-word;
+  font-size: 10px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+  max-width: 100px;
+  text-align: center;
+}
+
+#logo img {
+  max-height: 100px;
+  max-width: 100px;
+}
+
+/* DASHBOARD */
+
+#dashboard {
+  display: block;
+  width: 95%;
+  margin: auto;
+}
+
+#dashboard h1 {
+  font-size: 20px;
+  padding:10px 10px;
+}
+
+/* SUBMITTED APPLICATIONS */
+#all-submitted-applications-div{
+  margin:10px;
+  box-shadow: 1px 1px 2px #888888;
+  padding:0 0 5px 0;
+  border-radius: 5px;
+}
+
+#submitted-application-header{
+  padding:0 15px;
+  background-color: #00457D;
+  border-radius:5px 5px 0 0 ;
+  color:white;
+  display:inline-block;
+  width:100%;
+  box-sizing: border-box;
+}
+
+#submitted-application-header h2{
+  padding:10px 0;
+  font-size:15px;
+}
+
+.submitted-application-div {
+  box-shadow: 1px 1px 2px #888888;
+  border-radius: 5px;
+  margin:10px;
+}
+
+.collapsed-submitted-application{
+  width:100%;
+  background-color: #f1f1f1;
+  cursor: pointer;
+  outline: none;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  font-size: 15px;
+}
+
+.collapsed-submitted-application:after {
+  content: '\002B';
+  font-size: 20px;
+  float: right;
+}
+
+.collapsed-submitted-application.active:after {
+  content: "\2212";
+}
+
+.submitted-application-div-mini{
+  display:inline-flex;
+  width:40%;
+  left:0px;
+  justify-content: space-between;
+}
+
+.submitted-application-course-name{
+  vertical-align: middle;
+  display:inline-block
+}
+
+.submitted-application-course-mini-status{
+  display:inline-block;
+  vertical-align: middle;
+}
+
+.status-dot {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+  border:solid 2px white;
+}
+
+.submitted-application-div-expanded-details{
+  display:none;
+  padding:18px;
+}
+
+.submitted-application-div-expanded-details span{
+  font-size:15px;
+}
+
+
+/* CREATE NEW APPLICATION */
+#create-application-div{
+  box-shadow: 1px 1px 2px #888888;
+  border-radius: 5px;
+  margin:10px;
+}
+
+#create-application-header{
+  padding:0 15px;
+  background-color: #00457D;
+  border-radius:5px 5px 0 0 ;
+  color:white;
+  display:inline-block;
+  width:100%;
+  box-sizing: border-box;
+}
+
+#create-application-header h2{
+  padding:10px 0;
+  font-size:15px;
+}
+
+#application-course-select-flex{
+  display:flex;
+
+}
+
+#application-select-course{
+  padding:18px;
+  margin:auto;
+  background-color: #f1f1f1;
+  cursor: pointer;
+  border: none;
+  width: 80%;
+  text-align: left;
+  font-size: 15px;
+
+}
+
+#create-application-button{
+  width:20%;
+  padding:18px;
+  background-color: #CCCCCC;
+  cursor:pointer;
+  border:none;
+
+  font-size: 15px;
+}
+
+#create-application-course-details{
+  padding:18px;
+}
+

@@ -1,0 +1,200 @@
+body {
+    margin: 0;
+    padding: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-family: Verdana;
+    background-color: white;
+  }
+  
+  /* SIDE NAVIGATION BAR */
+  
+  #navigation-bar {
+    height: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #00457D;
+    overflow-x: auto;
+    padding: 20px 0px;
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box
+  }
+  
+  #navigation-bar div a {
+    padding: 10px;
+  }
+  
+  
+  #main-div {
+    margin-left: 100px;
+    /* Pushes out content from under navigation bar. Same width as navigation bar */
+  }
+  
+  #navigation-bar a {
+    padding: 10px;
+    text-decoration: none;
+    word-wrap: break-word;
+    font-size: 10px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+    max-width: 100px;
+    text-align: center;
+  }
+  
+  #logo img {
+    max-height: 100px;
+    max-width: 100px;
+  }
+  
+  /* DASHBOARD */
+  
+  #dashboard {
+    display: block;
+    width: 95%;
+    margin: auto;
+    box-shadow: 1px 1px 2px #888888;
+    border-radius: 5px;
+  }
+  
+  #dashboard h1 {
+    font-size: 25px;
+    width:100%;
+    background-color: #00457D;
+    padding: 20px 10px;
+    color:white;
+    border-radius:5px 5px 0 0 ;
+    box-sizing: border-box;
+  }
+
+  #allocation-div{
+    padding:10px;
+  }
+
+
+  /* COURSES AND SELECTION SCROLLY THING */
+  #courses-to-allocate-div{
+    display:inline-block;
+    justify-content: left;
+    overflow-x: scroll;
+    padding: 10px;
+    width:100%;
+    background-color: #f1f1f1;
+    box-sizing: border-box;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+
+  #course-search-div{
+    margin-bottom:10px;
+  }
+
+
+  .course-selection-div{
+    display:inline-block;
+    padding:10px;
+    background-color:white;
+    margin:2px;
+  }
+
+.course-selection-div h3{
+    font-size:15px;
+    margin: 0px;
+}
+
+.course-selection-div span{
+    font-size:12px;
+}
+
+/* APPLICATIONS SECTION */
+#accepted-applications-for-course,
+#pending-applications-for-course{
+    padding:10px;
+    display:block;
+    background-color: #f1f1f1;
+}
+
+.applications-section{
+    border-radius: 5px;
+    box-shadow: 1px 1px 2px #888888;
+}
+
+.applications-section-header{
+    background-color: #00457D;
+    color:white;
+    width: 100%;
+    border-radius: 5px 5px 0 0;
+    box-sizing: border-box;
+    padding: 0 0 5px 0;
+    margin-top:15px;
+    position:relative;
+    min-height: 70px;
+}
+
+.applications-section-header .fa{
+    position:absolute;
+    top:0;
+    right:0;
+    padding:10px;
+}
+
+.applications-section-header-search{
+    position:absolute;
+    bottom:5px;
+    right:5px;
+}
+
+.applications-section-header h3{
+    padding: 5px 5px 0 5px;
+    font-size: 15px;
+    margin: 0;
+}
+
+.applications-section-header span{
+    font-size: 10px;
+    padding: 0 5px 5px 5px;
+}
+
+.student-application{
+    border-radius:5px;
+    box-shadow: 1px 1px 2px #888888;
+    display:inline-block;
+    position:relative;  
+    background-color: white;
+    width: 200px;
+    padding: 10px;
+    box-sizing: border-box;
+    margin:2px;
+}
+
+.student-application h4{
+    font-size:12px;
+    margin:0px;
+}
+
+.student-application span{
+    font-size: 12px;
+}
+
+.student-application-grade{
+    position: absolute;
+    bottom:0;
+    right:0;
+    background-color: green;
+    color:white;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 10px;
+    width:20px;
+    height:20px;
+    line-height: 20px;
+}
+
+.student-application-more-details{
+    display:none;
+}

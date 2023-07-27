@@ -1,0 +1,229 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DB_URL")
+  extensions = [uuidOssp(map: "uuid-ossp")]
+}
+
+enum Role {
+  Student
+  Admin
+  CourseCoordinator
+  MarkerCoordinator
+  TutorCoordinator
+}
+
+enum ResidencyStatus {
+  Resident
+  Non_Resident
+}
+
+model Contract {
+  id            String         @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid()
+  userContracts UserContract[]
+}
+
+model UserContract {
+  userId     String    @db.Uuid()
+  contractId String    @db.Uuid()
+  contract   Contract? @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  user       User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, contractId])
+}
+
+model Account {
+  id                String  @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid()
+  userId            String  @db.Uuid()
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid()
+  sessionToken String   @unique
+  userId       String   @db.Uuid()
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id                 String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid()
+  email              String              @unique
+  name               String?
+  emailVerified      DateTime?
+  image              String?
+  accounts           Account[]
+  sessions           Session[]
+  role               Role                @default(Student)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  applications       UserApplication[]
+  contracts          UserContract[]
+  courses            UserCourse[]
+  applicants         Applicant[]
+  admins             Admin[]
+  courseCoordinators CourseCoordinator[]
+  tutors             Tutor[]
+  markers            Marker[]
+}
+
+model Applicant {
+  id                   String          @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid()
+  user                 User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId               String          @unique @db.Uuid()
+  overseas             Boolean
+  overseasReturnDate   DateTime?
+  residencyStatus      ResidencyStatus
+  altContact           String?
+  maxHours             Int
+  cv                   String?
+  unofficialTranscript String?
+  createdAt            DateTime        @default(now())
+  updatedAt            DateTime        @updatedAt
+  upi                  String?
+  auid                 String?
+  Applications         Application[]
+}
+
+model Admin {
+  id     String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid()
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique @db.Uuid()
+}
+
+model CourseCoordinator {
+  id      String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid()
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId  String   @unique @db.Uuid()
+  courses Course[]
+}
+
+model Tutor {
+  id     String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid()
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique @db.Uuid()
+}
+
+model Marker {
+  id     String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid()
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String @unique @db.Uuid()
+}
+
+model UserCourse {
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String @db.Uuid()
+  Course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId String @db.Uuid()
+
+  @@id([userId, courseId])
+}
+
+model Course {
+  id                  String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid()
+  Coordinator         CourseCoordinator   @relation(fields: [coordinatorId], references: [userId], onDelete: Cascade)
+  coordinatorId       String              @db.Uuid()
+  name                String
+  description         String
+  year                String
+  semester            Semester
+  startDate           DateTime
+  endDate             DateTime
+  markersNeeded       Int
+  maxNoMarkers        Int
+  markingHours        Int
+  maxNoTutors         Int
+  minGrade            Grade?
+  tutorsNeeded        Int
+  tutorHours          Int
+  enrolledStudents    Int
+  numberOfAssignments Int
+  responsibilities    String
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  applications        ApplicationCourse[]
+  users               UserCourse[]
+
+  @@unique([name, year, semester])
+}
+
+model ApplicationCourse {
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  applicationId String      @db.Uuid()
+  course        Course      @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  courseId      String      @db.Uuid()
+
+  @@id([applicationId, courseId])
+}
+
+model UserApplication {
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId        String      @db.Uuid()
+  application   Application @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  applicationId String      @db.Uuid()
+
+  @@id([userId, applicationId])
+}
+
+model Application {
+  id                  String              @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid()
+  Applicant           Applicant           @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+  applicantId         String              @db.Uuid()
+  courseId            String              @db.Uuid()
+  year                String              @default("2023")
+  semester            Semester            @default(Semester1)
+  status              ApplicationStatus   @default(Pending)
+  relevantExperience  String
+  previousCourseGrade Grade
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+  desiredRole         ApplicationRole
+  courses             ApplicationCourse[]
+  users               UserApplication[]
+
+  @@unique([courseId, year, semester])
+}
+
+enum ApplicationRole {
+  Tutor
+  Marker
+  CourseCoordinator
+}
+
+enum ApplicationStatus {
+  Accepted
+  Rejected
+  Pending
+}
+
+enum Semester {
+  Semester1
+  Semester2
+  Summer_School
+}
+
+enum Grade {
+  B_Minus
+  B
+  B_Plus
+  A_Minus
+  A
+  A_Plus
+}
